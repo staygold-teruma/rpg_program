@@ -18,6 +18,7 @@ class Brave
     puts "#{enemy.name}に#{brave_attack}のダメージを与えた" 
     # 質問箇所----------------------------------------------------
     # ローカル変数に代入して表示はできるが、自己代入でHPを減らす処理でエラーが出る
+    # putsで各変数に期待する数値は入っていることは確認しました。
     # left_hp = enemy.hp - brave_attack
     enemy.hp -= brave_attack
     puts "#{enemy.name}の残りHPは#{enemy.hp}だ"   # left_hpならうまく表示できる
