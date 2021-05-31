@@ -16,8 +16,11 @@ class Brave
     brave_attack = ( ( @offence - enemy.defence ) / 2 ).floor
     puts "#{@name}の攻撃"
     puts "#{enemy.name}に#{brave_attack}のダメージを与えた" 
+    # 質問箇所----------------------------------------------------
+    # ローカル変数に代入して表示はできるが、自己代入でHPを減らす処理でエラーが出る
+    # left_hp = enemy.hp - brave_attack
     enemy.hp -= brave_attack
-    puts "#{enemy.name}の残りHPは#{enemy.hp}だ"
+    puts "#{enemy.name}の残りHPは#{enemy.hp}だ"   # left_hpならうまく表示できる
   end
 end
 
@@ -42,7 +45,5 @@ end
 brave = Brave.new(params1)
 enemy = Enemy.new(params2)
 
-3.times do 
-  brave.attack_from_brave(enemy)
-  enemy.attack_from_enemy(brave)
-end
+brave.attack_from_brave(enemy)
+enemy.attack_from_enemy(brave)
