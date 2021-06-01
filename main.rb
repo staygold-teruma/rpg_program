@@ -1,50 +1,72 @@
+# ファイル読み込み
+require './brave.rb'
+require './monster.rb'
+
 # 勇者
-params1 = {name:"勇者", hp:35, offence:55, defence:30}
+params1 = {name:"勇者", hp:150, offence:45, defence:30, speed:20, point:0}
+
 # モンスター
-params2 = {name:"バラモス", hp:40, offence:45, defence:40}
-
-class Brave
-  attr_reader :name, :hp, :defence
-  def initialize(params)
-    @name = params[:name]
-    @hp = params[:hp]
-    @offence = params[:offence]
-    @defence = params[:defence]
-  end 
-
-  def attack_from_brave(enemy)
-    brave_attack = ( ( @offence - enemy.defence ) / 2 ).floor
-    puts "#{@name}の攻撃"
-    puts "#{enemy.name}に#{brave_attack}のダメージを与えた" 
-    # 質問箇所----------------------------------------------------
-    # ローカル変数に代入して表示はできるが、自己代入でHPを減らす処理でエラーが出る
-    # putsで各変数に期待する数値は入っていることは確認しました。
-    # left_hp = enemy.hp - brave_attack
-    enemy.hp -= brave_attack
-    puts "#{enemy.name}の残りHPは#{enemy.hp}だ"   # left_hpならうまく表示できる
-  end
+# 乱数生成
+monster_random = rand(1..20)
+# モンスター抽選
+case monster_random
+  when 1..3
+    params2 = {name:"バラモス", hp:160, offence:45, defence:45, speed:15, point:50}
+  when 4..5
+    params2 = {name:"メタルスライム", hp:5, offence:33, defence:100, speed:30, point:100}
+  when 6..10
+    params2 = {name:"キメラ", hp:45, offence:35, defence:30, speed:25, point:20}
+  when 11..15
+    params2 = {name:"ゴーレム", hp:80, offence:40, defence:40, speed:10, point:30}
+  when 16..20
+    params2 = {name:"スライム", hp:25, offence:32, defence:35, speed:15, point:10}
 end
 
-class Enemy
-  attr_reader :name, :hp, :defence
-  def initialize(params)
-    @name = params[:name]
-    @hp = params[:hp]
-    @offence = params[:offence]
-    @defence = params[:defence]
-  end
-
-  def attack_from_enemy(brave)
-    enemy_attack = ( ( @offence - brave.defence ) / 2 ).floor
-    puts "#{@name}の攻撃"
-    puts "#{brave.name}に#{enemy_attack}のダメージを与えた" 
-    brave.hp -= enemy_attack
-    puts "#{brave.name}の残りHPは#{brave.hp}だ"
-  end
-end
-
+# 勇者・モンスターの生成
 brave = Brave.new(params1)
-enemy = Enemy.new(params2)
+monster = Monster.new(params2)
 
-brave.attack_from_brave(enemy)
-enemy.attack_from_enemy(brave)
+# モンスター出現
+monster.appear
+
+# 戦闘
+while brave.hp > 0 && monster.hp > 0
+  # 勇者の方が早い場合
+  if brave.speed > monster.speed
+    brave.attack_from_brave(monster)
+    # モンスターが生きていれば
+    if monster.hp > 0
+      monster.attack_from_monster(brave) 
+      # 勇者が生きていれば
+      if brave.hp > 0
+        puts <<~TEXT
+        *=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+        【#{brave.name}】HP:#{brave.hp}
+        【#{monster.name}】HP:#{monster.hp}
+        *=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+        TEXT
+      end
+    else
+      break
+    end
+  # モンスターの方が早い場合
+  else
+    monster.attack_from_monster(brave)
+    # 勇者が生きていれば
+    if brave.hp > 0
+      brave.attack_from_brave(monster) 
+      # モンスターが生きていれば
+      if monster.hp > 0
+        puts <<~TEXT
+        *=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+        【#{brave.name}】HP:#{brave.hp}
+        【#{monster.name}】HP:#{monster.hp}
+        *=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+        TEXT
+      end
+    else
+      break
+    end
+  end
+end
+puts "戦闘は終了した"
