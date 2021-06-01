@@ -1,7 +1,5 @@
 require './character.rb'
-
 class Monster < Character
-
   def appear 
     puts <<~TEXT
     *=*=*=*=*=*=*=*=*=*=*=*=*=*=*

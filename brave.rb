@@ -1,5 +1,4 @@
 require './character.rb'
-
 class Brave < Character
   def attack_from_brave(monster)
     # 攻撃を計算

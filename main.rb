@@ -5,10 +5,10 @@ require './monster.rb'
 # 勇者
 params1 = {name:"勇者", hp:150, offence:45, defence:30, speed:20, point:0}
 
-# モンスター
+# モンスター抽選
 # 乱数生成
 monster_random = rand(1..20)
-# モンスター抽選
+# モンスター抽選ボックス
 case monster_random
   when 1..3
     params2 = {name:"バラモス", hp:160, offence:45, defence:45, speed:15, point:50}
@@ -29,7 +29,17 @@ monster = Monster.new(params2)
 # モンスター出現
 monster.appear
 
-# 戦闘
+# 残りHP表示
+def each_condition(brave, monster)
+  puts <<~TEXT
+  *=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+  【#{brave.name}】HP:#{brave.hp}
+  【#{monster.name}】HP:#{monster.hp}
+  *=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+  TEXT
+end
+
+# 戦闘開始
 while brave.hp > 0 && monster.hp > 0
   # 勇者の方が早い場合
   if brave.speed > monster.speed
@@ -39,16 +49,12 @@ while brave.hp > 0 && monster.hp > 0
       monster.attack_from_monster(brave) 
       # 勇者が生きていれば
       if brave.hp > 0
-        puts <<~TEXT
-        *=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-        【#{brave.name}】HP:#{brave.hp}
-        【#{monster.name}】HP:#{monster.hp}
-        *=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-        TEXT
+        each_condition(brave, monster)
       end
     else
       break
     end
+
   # モンスターの方が早い場合
   else
     monster.attack_from_monster(brave)
@@ -57,12 +63,7 @@ while brave.hp > 0 && monster.hp > 0
       brave.attack_from_brave(monster) 
       # モンスターが生きていれば
       if monster.hp > 0
-        puts <<~TEXT
-        *=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-        【#{brave.name}】HP:#{brave.hp}
-        【#{monster.name}】HP:#{monster.hp}
-        *=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-        TEXT
+        each_condition(brave, monster)
       end
     else
       break
