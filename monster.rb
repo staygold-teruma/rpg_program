@@ -7,8 +7,9 @@ class Monster < Character
     *=*=*=*=*=*=*=*=*=*=*=*=*=*=*
     TEXT
   end
-
-  def attack_from_monster(brave)
+  
+  # モンスターの攻撃処理
+  def attack(brave)
     # 攻撃を計算
     # 攻撃が1未満になる場合は1を代入する（ダメージを1にする）
     if (@offence - brave.defence / 2 ) < 1
@@ -22,14 +23,12 @@ class Monster < Character
 
     # HPを減らす処理
     brave.hp -= monster_attack
-
-    # 勇者が負けた場合
-    if brave.hp <= 0
-      brave.hp = 0
-      puts "#{brave.name}は力尽きた…"
-    # 戦闘継続
-    else
-      puts "#{brave.name}の残りHPは#{brave.hp}だ"  
-    end
+    brave.hp = 0 if brave.hp <= 0
   end
+
+  # 勇者敗北時の結果
+  def info_result(brave)
+    puts "#{brave.name}は力尽きた…"
+  end
+
 end
