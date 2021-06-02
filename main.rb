@@ -50,14 +50,14 @@ while brave.hp > 0 && monster.hp > 0
     #勇者が攻撃
     brave.attack(monster)
     # モンスター生存時、モンスター攻撃
-      monster.attack(brave) if monster.hp > 0
+    monster.attack(brave) if monster.hp > 0
 
   # モンスターの方が早い場合
   else
     # モンスターの攻撃
     monster.attack(brave)
     # 勇者生存時、勇者攻撃
-      brave.attack(monster) if brave.hp > 0
+    brave.attack(monster) if brave.hp > 0
   end 
 
   # 勇者もモンスターも生存時、残りHP表示
@@ -69,5 +69,6 @@ end
 # 「真(true)」時の処理 if 条件式
 # 条件式 ? 「真(true)」時の処理 : 「偽(false)」時の処理
 
+# 結果表示
 monster.hp <= 0 ? brave.info_result(monster) : monster.info_result(brave)
 puts "戦闘は終了した"
