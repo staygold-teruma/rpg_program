@@ -20,21 +20,30 @@ class Brave < Character
   end
   
   # 勇者勝利時の結果
-  def info_result(monster)
+  def info_win_result(monster)
     puts "#{monster.name}を倒した!"
     puts "#{@name}は#{monster.point}の経験値を手に入れた"
     @point += monster.point
 
-    level =
+    new_level =
     case @point
       when 10..20
-        1
-      when 21..50
         2
-      when 51..100
+      when 21..50
         3
+      when 51..100
+        4
+      when 101..200
+        5
     end
-    puts "#{@name}はレベルが#{level}上がった!"
+  
+    puts "#{@name}はレベルが#{new_level}にあがった!" if new_level > @lv
+    @lv = new_level
   end
 
+  # 勇者敗北時の結果
+  def info_lose_result
+    puts "#{@name}は力尽きた…"
+    exit
+  end
 end

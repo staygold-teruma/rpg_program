@@ -26,9 +26,4 @@ class Monster < Character
     brave.hp = 0 if brave.hp <= 0
   end
 
-  # 勇者敗北時の結果
-  def info_result(brave)
-    puts "#{brave.name}は力尽きた…"
-  end
-
 end
