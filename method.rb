@@ -1,9 +1,9 @@
 # モンスター抽選メソッド
 def draw_monster(monster_random)
   case monster_random
-  when 1..3
-    {name:"バラモス", hp:150, offence:45, defence:45, speed:15, point:50, lv:1}
-  when 4, 5
+  when 1,2
+    {name:"バラモス", hp:180, offence:45, defence:45, speed:15, point:50, lv:1}
+  when 3..5
     {name:"メタルスライム", hp:5, offence:33, defence:130, speed:30, point:100, lv:1}
   when 6..10
     {name:"キメラ", hp:45, offence:35, defence:30, speed:25, point:20, lv:1}
@@ -43,6 +43,6 @@ def battle(brave, monster)
     end 
 
     # 勇者もモンスターも生存時、残りHP表示
-    info_condition(brave, monster) if brave.hp > 0 && monster.hp > 0
+    info_condition(brave, monster) 
   end
 end
