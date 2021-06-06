@@ -1,6 +1,5 @@
 require './character.rb'
 class Brave < Character
-
   # 勇者の攻撃処理
   def attack(monster)
     # 攻撃を計算
@@ -26,9 +25,18 @@ class Brave < Character
 
     # 経験値付与
     @point += monster.point
-    
+  end
+
+  # 勇者敗北時の結果表示
+  def info_lose_result_and_exit
+    puts "#{@name}は力尽きた…"
+    exit
+  end
+
+  # 勇者のレベルアップ
+  def level_up
     # 経験値に応じたレベルの設定
-    @new_level =
+    new_level =
     case @point
       when 10..30
         2
@@ -45,20 +53,11 @@ class Brave < Character
     end
     
     # レベルアップ時のみ表示
-    puts "#{@name}はレベルが#{@new_level}にあがった!" if @new_level > @lv
-  end
-
-  # 勇者敗北時の結果表示
-  def info_lose_result
-    puts "#{@name}は力尽きた…"
-    exit
-  end
-
-  def level_up
+    puts "#{@name}はレベルが#{new_level}にあがった!" if new_level > @lv
     # レベルアップする回数
-    level_up_num = @new_level - @lv
+    level_up_num = new_level - @lv
     # 戦闘で減ったHPを初期化
-    @hp = 150
+    @hp = 150 + 5 * (@lv - 1)
     
     # レベルアップ処理（下記、成長モデルに沿って）
     # レベルアップした回数分を繰り返す
@@ -80,9 +79,7 @@ class Brave < Character
         @speed += 5
       end
     end
-
   end
-
 end
 
 # 勇者の成長モデル
