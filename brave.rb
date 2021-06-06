@@ -1,23 +1,5 @@
 require './character.rb'
 class Brave < Character
-  # 勇者の攻撃処理
-  def attack(monster)
-    # 攻撃を計算
-    # 攻撃が1未満になる場合は1を代入する（ダメージを1にする）
-    if (@offence - monster.defence / 2 ) < 1
-      brave_attack = 1
-    else
-      brave_attack = ( @offence - monster.defence / 2 ).round(0)
-    end
-
-    puts "#{@name}の攻撃"
-    puts "#{monster.name}に#{brave_attack}のダメージを与えた" 
-
-    # HPを減らす処理
-    monster.hp -= brave_attack
-    monster.hp = 0 if monster.hp <= 0
-  end
-  
   # 勇者勝利時の結果表示
   def info_win_result(monster)
     puts "#{monster.name}を倒した!"
@@ -36,7 +18,7 @@ class Brave < Character
   # 勇者のレベルアップ
   def level_up
     # 経験値に応じたレベルの設定
-    new_level =
+    @new_level =
     case @point
       when 10..30
         2
@@ -51,14 +33,23 @@ class Brave < Character
       when 601..99999
         7
     end
-    
+
     # レベルアップ時のみ表示
-    puts "#{@name}はレベルが#{new_level}にあがった!" if new_level > @lv
+    puts "#{@name}はレベルが#{@new_level}にあがった!" if @new_level > @lv
+
+    # 各パラメーターの成長（privateメソッド）
+    grow_parameter
+
+  end
+
+  # privateメソッド
+  private
+  
+  def grow_parameter
     # レベルアップする回数
-    level_up_num = new_level - @lv
+    level_up_num = @new_level - @lv
     # 戦闘で減ったHPを初期化
     @hp = 150 + 5 * (@lv - 1)
-    
     # レベルアップ処理（下記、成長モデルに沿って）
     # レベルアップした回数分を繰り返す
     level_up_num.times do
@@ -91,3 +82,5 @@ end
 #   {name:"勇者", hp:170, offence:55, defence:40, speed:25, lv:5},
 #   {name:"勇者", hp:175, offence:55, defence:45, speed:25, lv:6}
 # ]
+
+

@@ -2,7 +2,7 @@
 require './brave.rb'
 require './monster.rb'
 require './methods.rb'
-require './messages.rb'
+require './message.rb'
 
 
 
@@ -15,7 +15,7 @@ brave = Brave.new(brave_params)
 # # ボス(バラモス)を倒すか、勇者が負けるまで、戦闘&成長を繰り返す
 loop do
   monster = Monster.create_monster
-  Message.info_monster_appear(monster)
+  Message.monster_appear(monster)
 
   # 戦闘
   battle(brave, monster)
@@ -27,7 +27,7 @@ loop do
   brave.level_up
   
   # 勇者パラメーター確認用
-  Message.info_brave_growth(brave)
+  Message.brave_growth(brave)
   
   # バラモスを倒した時点で終了
   break if monster.name == "バラモス" 
