@@ -1,4 +1,5 @@
 require './character.rb'
+
 class Brave < Character
   # 勇者勝利時の結果表示
   def info_win_result(monster)
@@ -76,8 +77,8 @@ class Brave < Character
 
     # レベルアップ後はHPが最大まで回復する仕様
     @hp = @max_hp
-
   end
+
 end
 
 # 勇者の成長モデル

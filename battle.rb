@@ -24,16 +24,16 @@ module Battle
     end
 
     # 攻撃処理
-    def attack(attaker, target)
+    def attack(attacker, target)
       # 攻撃を計算
       # 攻撃が1未満になる場合は1を代入する（ダメージを1にする）
-      if (attaker.offence - target.defence / 2 ) < 1
+      if (attacker.offence - target.defence / 2 ) < 1
         damage = 1
       else
-        damage = ( attaker.offence - target.defence / 2 ).round(0)
+        damage = ( attacker.offence - target.defence / 2 ).round(0)
       end
 
-      puts "#{attaker.name}の攻撃"
+      puts "#{attacker.name}の攻撃"
       puts "#{target.name}に#{damage}のダメージを与えた" 
 
       # HPを減らす処理
