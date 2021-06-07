@@ -19,7 +19,7 @@ class Brave < Character
   # 勇者のレベルアップ
   def level_up
     # 経験値に応じたレベルの設定
-    get_new_level
+    @new_level = get_new_level
     # レベルアップ時のみ表示
     puts "#{@name}はレベルが#{@new_level}にあがった!" if @new_level > @lv
 
@@ -32,7 +32,6 @@ class Brave < Character
   private
   
   def get_new_level
-    @new_level =
       case @point
         when 10..30
           2
