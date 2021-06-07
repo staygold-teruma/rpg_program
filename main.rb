@@ -1,9 +1,8 @@
 # ファイル読み込み
 require './brave.rb'
 require './monster.rb'
-require './methods.rb'
 require './message.rb'
-
+require './battle.rb'
 
 
 # 実行部分----------------------------------------------------------------------------
@@ -17,8 +16,8 @@ loop do
   monster = Monster.create_monster
   Message.monster_appear(monster)
 
-  # 戦闘
-  battle(brave, monster)
+  # 戦闘ターン実行
+  Battle.repeat_turn(brave, monster)
 
   # 結果表示
   monster.hp <= 0 ? brave.info_win_result(monster) : brave.info_lose_result_and_exit
